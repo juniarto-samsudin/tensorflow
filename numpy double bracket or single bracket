@@ -1,0 +1,22 @@
+Sometimes it can be confusing whether to create numpy array with double bracket or single bracket.
+  np.array([1,2,3]), or
+  np.array([[1,2,3]])
+You can check the shape:
+  np.array([1,2,3]).shape  ==> (3,)   3 elements one dimensional array
+  np.array([[1,2,3]].shape ==> (1,3)  1 x 4 two dimensional array
+
+Actually all of these, starts with list
+  list1 = [1,2,3]
+  len(list1)    ==> 3 , it is a list of 3 items
+  list2 =[[1,2,3]]
+  len(list2)    ==> 1 , it is a list of 1 items
+  len(list2[0]) ==> 3 , it is a list of 3 items
+  
+ More examples:
+  np.array([-400,-100,0,100,400]).shape    ==> (5, )   5 elements one dimensional array
+  np.array([[-400,-100,0,100,400]]).shape  ==> (1,5)   1 x 5 two dimensional array
+  np.array([[-400],[-100],[0],[100],[400]]).shape ==> (5,1)  5 x 1 two dimensional array
+  
+  
+
+ 
