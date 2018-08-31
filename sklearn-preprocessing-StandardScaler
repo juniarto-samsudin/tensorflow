@@ -1,0 +1,30 @@
+StandardScaler
+    x_scaler = (xi - xmean)/(standard deviation of that feature)
+    
+example:
+x = (-400, -100, 0, 100, 400)
+xmean = 0,
+std deviation = 260,768
+After Standardscaler is applied, 
+x becomes:
+x = (-1.53, -0.38, 0, 0.38, 1.53)
+
+
+python code:
+
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+x = np.array([[-400],[-100],[0],[100], [400]])
+x_scaler = StandardScaler().fit_transform(x)
+
+Note:
+When you're trying to apply fit_transform method of StandardScaler object ot array of size(1,n) you 
+obviously get all zeros, because for each number of array you substract from it means of this number, 
+which is equal to the number and divide by  std of this number. If you want to get correct scaling of 
+your array, you should convert it to array with size (n,1).
+
+
+
+
+
