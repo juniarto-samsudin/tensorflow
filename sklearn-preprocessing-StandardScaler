@@ -18,11 +18,34 @@ import numpy as np
 x = np.array([[-400],[-100],[0],[100], [400]])
 x_scaler = StandardScaler().fit_transform(x)
 
+
 Note:
-When you're trying to apply fit_transform method of StandardScaler object ot array of size(1,n) you 
-obviously get all zeros, because for each number of array you substract from it means of this number, 
-which is equal to the number and divide by  std of this number. If you want to get correct scaling of 
-your array, you should convert it to array with size (n,1).
+
+I want to explain the confusion on creating array using np.array
+    a. np.array = ([[-400], [-100], [0],  [100], [400] )
+    The result is
+                   feature_1
+                   -400
+                   -100
+                      0
+                    100
+                    400
+    b. np.array = ([[1,2,3],[4,5,6],[7,8,9]])
+    The result is
+                   feature_1       feature_2       feature_3
+                   1                2               3
+                   4                5               6
+                   7                8               9
+                   
+    c. np.array = ([-400, -100, 0, 100, 400])
+    The result is
+                   feature_1       feature_2       feature_3      feature_4    feature_5
+                   -400             -100            0              100          400
+    
+    When you're trying to apply fit_transform method of StandardScaler object ot array of size(1,n) you 
+    obviously get all zeros, because for each number of array you substract from its own means, 
+    which is equal to the number itself and divide by  std of this number. If you want to get correct scaling of 
+    your array, you should convert it to array with size (n,1).
 
 
 
