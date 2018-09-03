@@ -9,6 +9,11 @@ After Standardscaler is applied,
 x becomes:
 x = (-1.53, -0.38, 0, 0.38, 1.53)
 
+The StandardScaler assumes the data is normally distributed within each feature and
+will scale them such that the distribution is now centred around 0, with a standard
+deviation of 1. So, if the data is not normally distributed, this is not the best
+scaler to use.
+
 
 python code:
 
