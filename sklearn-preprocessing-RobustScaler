@@ -1,0 +1,8 @@
+The RobustScaler uses a similar method to the Min-Max scaler but it instead uses the interquartile range, rather than the min-max, so 
+that it is robust to outliers. Therefore it follows the formula:
+
+(xi - Q1(x)) / (Q3(x)  - Q1(x))  for each feature
+
+Of course this means it is using the less of the data for scaling sot it's more suitable when the are outliers in the data set.
+
+
