@@ -1,0 +1,9 @@
+The MinMaxScaler is the probably the most famous scaling algorithm, and follows formula fore each feature:
+      (xi - min(x)) / ( max(x) - min(x))
+It is essentially shrinks the range such that the range is now between 0 and 1 ( or -1 to 1 if there are negative values).
+This scaler works better for cases in which the standard scaler might not work so well. If the destribution is not Gaussian or 
+the standard deviation is very small, the min-max scaler works better.
+
+However , it is sensitive to outliers, so if there are outliers in the data, you might want to consider the ROBUST SCALER.
+
+Example:
