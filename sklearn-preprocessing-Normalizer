@@ -1,0 +1,7 @@
+The normalizer scales each value by dividing each value by its magnitude in n-dimensional space for n number of features.
+
+Say your features were x, y, and z Cartezian co-ordinates your scaled value for x would be:
+
+xi / sqrt(xi*xi   +   yi*yi  + zi*zi)
+
+Each point is now within 1 unit of the origin on this Cartesian co-ordinate system.
