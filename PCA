@@ -1,0 +1,33 @@
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+import pandas as pd
+
+
+plt.figure(figsize=(8,6), dpi=100)
+plt.subplot(111)
+
+data = load_iris()
+Y = data.target
+
+X = data.data
+pca = PCA(n_components=2)
+reduced_X = pca.fit_transform(X)
+
+iris_reduce_tbl = pd.DataFrame(reduced_X)
+iris_complete = pd.concat([iris_reduce_tbl,pd.DataFrame(Y)],axis=1)
+iris_complete.columns=["PC1","PC2","Target"]
+
+
+my_color=[]
+for test in Y:
+    if test == 0:
+        my_color.append("blue")
+    elif test == 1:
+        my_color.append("red")
+    else:
+        my_color.append("green")
+
+
+plt.scatter(iris_complete.loc[:,['PC1']],iris_complete.loc[:,['PC2']],color=my_color)
+plt.show()
