@@ -39,7 +39,7 @@ np_test_labels = np.array(test_labels)
 np_train_labels_encoded = to_categorical(np_train_labels)
 np_test_labels_encoded = to_categorical(np_test_labels)
 
-#construct the model
+#construct the model and build the model
 model = models.Sequential()
 model.add(layers.Dense(10,activation='softmax'))
 model.compile(optimizer=optimizers.SGD(lr=0.005),
@@ -48,6 +48,45 @@ model.compile(optimizer=optimizers.SGD(lr=0.005),
 history = model.fit(np_train_images,np_train_labels_encoded,epochs=2, batch_size=100,
                     validation_data=(np_test_images,np_test_labels_encoded))
 model.summary()
+
+#To see the performance of training and validation, we can create
+#Training-Validation Accuracy Chart and Training-Validation 
+#History provides the following keys:
+#val_loss ==> validation loss
+#val_acc  ==> validation accuracy
+#loss     ==> training loss
+#acc      ==> training acc
+
+history_dict = history.history
+print(history_dict.keys())
+
+import matplotlib.pyplot as plt
+loss_values = history_dict['loss']
+val_lost_values = history_dict['val_loss']
+
+epochs = range(1, len(history_dict['acc']) + 1)
+
+plt.plot(epochs, loss_values, 'bo', label='Training Loss')
+plt.plot(epochs, val_lost_values, 'b', label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.savefig("Mnist Training-Val-Loss.png")
+
+plt.clf()
+acc_values = history_dict['acc']
+val_acc_values = history_dict['val_acc']
+plt.plot(epochs, acc_values, 'bo', label="Training Acc")
+plt.plot(epochs, val_acc_values, 'b', label="Validation Acc")
+plt.title('Training and Validation Accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("Mnist Training-Val-Accuracy.png")
+
+
+
+
 
 
 
