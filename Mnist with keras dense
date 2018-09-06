@@ -1,0 +1,55 @@
+from mnist import MNIST
+from keras import models
+from keras import layers
+from keras import optimizers
+from keras.utils import to_categorical
+import numpy as np
+
+# MNIST_data is the folder where MNIST data set is downloaded and unzipped
+
+mndata = MNIST("/home/juniarto/MNIST_data")
+
+#train_images is a list with dimension of (60000, 784)
+#test_images is a list with dimension of (10000, 784)
+#train_labels is a list with dimension of (60000, 1)
+#test_labels is a list with dimension of (10000, 1)
+
+train_images, train_labels = mndata.load_training()
+test_images, test_labels = mndata.load_testing()
+
+#list cannot be fed into the keras.
+#keras only accept np array, so we need convert list to np array
+#further we change the number type to float32 and divide by 255
+#here the format of np_train_images and np_test_images are np array of (60000, 784) and
+#(10000, 784) respectively
+
+np_train_images = np.array(train_images)
+np_test_images = np.array(test_images)
+np_train_images = np_train_images.astype('float32')
+np_test_images = np_test_images.astype('float32')
+np_train_images /= 255
+np_test_images /=255
+
+#samething with labels, we need to convert them into array
+#and encode into one-hot format
+#final format is np array of (60000,10) and (10000,10) respectively
+
+np_train_labels = np.array(train_labels)
+np_test_labels = np.array(test_labels)
+np_train_labels_encoded = to_categorical(np_train_labels)
+np_test_labels_encoded = to_categorical(np_test_labels)
+
+#construct the model
+model = models.Sequential()
+model.add(layers.Dense(10,activation='softmax'))
+model.compile(optimizer=optimizers.SGD(lr=0.005),
+              loss='mean_squared_error',
+              metrics=['accuracy'])
+history = model.fit(np_train_images,np_train_labels_encoded,epochs=2, batch_size=100,
+                    validation_data=(np_test_images,np_test_labels_encoded))
+model.summary()
+
+
+
+
+
