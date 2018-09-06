@@ -15,29 +15,41 @@ mndata = MNIST("/home/juniarto/MNIST_data")
 #test_labels is a list with dimension of (10000, 1)
 
 train_images, train_labels = mndata.load_training()
-test_images, test_labels = mndata.load_testing()
+val_images, val_labels = mndata.load_testing()  #==> for valuation while learning 
 
 #list cannot be fed into the keras.
 #keras only accept np array, so we need convert list to np array
 #further we change the number type to float32 and divide by 255
-#here the format of np_train_images and np_test_images are np array of (60000, 784) and
+#here the format of np_train_images and np_val_images are np array of (60000, 784) and
 #(10000, 784) respectively
 
 np_train_images = np.array(train_images)
-np_test_images = np.array(test_images)
+np_val_images = np.array(test_images)
 np_train_images = np_train_images.astype('float32')
-np_test_images = np_test_images.astype('float32')
+np_val_images = np_test_images.astype('float32')
 np_train_images /= 255
-np_test_images /=255
+np_val_images /=255
+
+#we are not going to use all the np_train_images
+#we split np_train_images into 50000 of np_train_images_final for training
+#and 10000 np_test_images for testing [differs from valuation]
+np_train_images_final = np_train_images[:50000,:]
+np_test_images = np_train_images[50000:,:]
+
 
 #samething with labels, we need to convert them into array
 #and encode into one-hot format
 #final format is np array of (60000,10) and (10000,10) respectively
 
 np_train_labels = np.array(train_labels)
-np_test_labels = np.array(test_labels)
+np_val_labels = np.array(val_labels)
 np_train_labels_encoded = to_categorical(np_train_labels)
-np_test_labels_encoded = to_categorical(np_test_labels)
+np_val_labels_encoded = to_categorical(np_val_labels)
+
+#split np_train_labels = np_train_labels_final and np_test_labels
+np_train_labels_encoded_final = np_train_labels_encoded[:50000,:]
+np_test_labels_encoded = np_train_labels_encoded[50000:,:]
+
 
 #construct the model and build the model
 model = models.Sequential()
@@ -45,8 +57,8 @@ model.add(layers.Dense(10,activation='softmax'))
 model.compile(optimizer=optimizers.SGD(lr=0.005),
               loss='mean_squared_error',
               metrics=['accuracy'])
-history = model.fit(np_train_images,np_train_labels_encoded,epochs=2, batch_size=100,
-                    validation_data=(np_test_images,np_test_labels_encoded))
+history = model.fit(np_train_images_final,np_train_labels_encoded_final,epochs=2, batch_size=100,
+                    validation_data=(np_val_images,np_val_labels_encoded))
 model.summary()
 
 #To see the performance of training and validation, we can create
