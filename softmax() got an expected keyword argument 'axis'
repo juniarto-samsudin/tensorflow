@@ -1,0 +1,9 @@
+if you happen to encounter this error:
+          softmax() got an unexpected keyword argument 'axis'
+          
+you can change the following in tensorflow_backend.py
+              def softmax(x, axis=-1):
+                  ###
+                  ###
+                  return tf. nn.softmax(x, axis=axis)  ===> change this to return tf.nn.sofmax(x, axis)
+                  
