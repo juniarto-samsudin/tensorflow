@@ -1,0 +1,72 @@
+We set the model.fit with batch size of 100.
+The following matrix is true
+
+[100 x 784] . [784 x 10] = [100 x 10]
+
+Our one layer set-up is based on matrix above
+
+model = models.Sequential()
+model.add(layers.Dense(10, activation="softmax")      ====> 10 is the number of neurons, each with prediction probability of 10 numbers.
+model.compile(optimizer=optimizers.SGD(lr=0.005),
+              loss='mean_squared_error',
+              metrics=['accuracy'])
+history = model.fit(np_train_images_final,np_train_labels_encoded_final,epochs=60, batch_size=100,
+                        validation_data=(np_val_images,np_val_labels_encoded))
+                        
+                        
+We add one layer of 30 neurons
+
+[100 x 784].[784 x 30]= [100 x 30]   ==> First Layer 30 neurons
+[100 x  30].[ 30 x 10]= [100 x 10]   ==> Second Layer 10 neurons Softmax
+
+code:
+model.add(layers.Dense(30,activation='relu'))
+model.add(layers.Dense(10,activation="softmax"))
+
+More Layers
+
+[100 x 784].[784 x 200] = [100 x 200]   ==> First layer 200 neurons
+[100 x 200].[200 x 100] = [100 x 100]   ==> Second layer 100 neurons
+[100 x 100].[100 x  60] = [100 x  60]   ==> Third layer 60 neurons
+[100 x  60].[ 60 x  30] = [100 x  30]   ==> Fourth layer 30 neurons
+[100 x  30].[ 30 x  10] = [100 x  10]   ==> Fifth layer  10 neurons
+
+code:
+model.add(layers.Dense(200,activation='relu'))
+model.add(layers.Dense(100,activation="relu"))
+model.add(layers.Dense(60,activation="relu"))
+model.add(layers.Dense(30,activation="relu"))
+model.add(layers.Dense(10,activation="softmax"))
+
+The takeaway is
+Each of our image has 784 pixels.
+a. for one layer of 10 neurons.
+        we reduce the 784 pixels into 10 [pixels]. Well, the 10 pixels are not actually pixels
+        but prediction probability. So, neuron reduce the 784 pixels or feature to 10
+b. for two layers of 30 neurons and 10 neurons.
+        first layer reduce 784 to 30
+        second layer reduce 30 to 10
+c. many layers
+        first layer reduce 784 to 200
+        second layer reduce 200 to 100
+        third layer reduce 100 to 60
+        fourth layer reduce 60 to 30
+        fifth layer reduce 30 to 10
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
